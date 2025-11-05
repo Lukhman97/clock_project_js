@@ -1,0 +1,149 @@
+/* ================= BODY ================= */
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+
+    /* Moving colorful radial background */
+    background: radial-gradient(circle at 50% 50%, #ff9a9e, #f6e7d7, #a1c4fd, #c2e9fb, #ff6ec4, #42e695, #fbc2eb);
+    background-size: 600% 600%;
+    animation: bgMove 25s linear infinite alternate;
+}
+
+@keyframes bgMove {
+    0% { background-position: 0% 0%; }
+    25% { background-position: 50% 25%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 75%; }
+    100% { background-position: 0% 100%; }
+}
+
+/* ================= CONTAINER ================= */
+.container {
+    width: 420px;
+    height: 250px;
+    border-radius: 35px;
+
+    /* Moving multi-colored radial gradient */
+    background: radial-gradient(circle at top left, #ff512f, #dd2476, #24c6dc, #514a9d, #ee0979, #ff6a00, #42e695, #ff6ec4);
+    background-size: 400% 400%;
+    animation: containerMove 12s ease infinite alternate;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    /* Multi-layer shadows for neon glow */
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.5),
+        0 0 30px rgba(255,0,200,0.6),
+        0 0 50px rgba(0,200,255,0.6),
+        inset 0 0 25px rgba(255,255,255,0.2),
+        inset 0 0 50px rgba(255,255,255,0.1);
+
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.container:hover {
+    transform: scale(1.1) rotate(-2deg);
+    box-shadow:
+        0 10px 50px rgba(255,0,200,0.9),
+        0 0 80px rgba(0,200,255,0.9),
+        0 0 120px rgba(255,255,0,0.7),
+        inset 0 0 50px rgba(255,255,255,0.3);
+}
+
+@keyframes containerMove {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 100%; }
+}
+
+/* ================= CLOCK TEXT ================= */
+#clock {
+    font-size: 80px;
+    color: #fff;
+    letter-spacing: 4px;
+    text-shadow:
+        0 0 10px #fff,
+        0 0 20px #ff00de,
+        0 0 30px #42e695,
+        0 0 50px #ff6ec4,
+        0 0 70px #f9d423,
+        0 0 90px #ff512f,
+        0 0 110px #dd2476,
+        0 0 130px #24c6dc;
+
+    animation: glowPulse 2.5s ease-in-out infinite alternate, floatText 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0% {
+        text-shadow:
+        0 0 10px #ff0a54,
+        0 0 30px #ff9a9e,
+        0 0 50px #42e695,
+        0 0 70px #ff6ec4,
+        0 0 90px #f9d423,
+        0 0 110px #ff512f;
+    }
+    50% {
+        text-shadow:
+        0 0 20px #42e695,
+        0 0 50px #ff6ec4,
+        0 0 70px #ff00de,
+        0 0 90px #f83600,
+        0 0 110px #c2e9fb,
+        0 0 130px #ff512f;
+    }
+    100% {
+        text-shadow:
+        0 0 30px #ff9a9e,
+        0 0 60px #42e695,
+        0 0 90px #ff00de,
+        0 0 120px #ff512f,
+        0 0 150px #f9d423,
+        0 0 180px #24c6dc;
+    }
+}
+
+/* Float / subtle bounce effect */
+@keyframes floatText {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+/* ================= PARTICLES ================= */
+body::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: moveParticles 60s linear infinite;
+    z-index: 0;
+}
+
+@keyframes moveParticles {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-150px, -150px); }
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .container { width: 85%; height: 180px; }
+    #clock { font-size: 55px; }
+}
+
+@media (max-width: 480px) {
+    .container { width: 90%; height: 150px; border-radius: 25px; }
+    #clock { font-size: 38px; }
+}
