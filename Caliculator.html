@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Glass Calculator</title>
+
+    <style>
+
+        /* ---------- BACKGROUND ---------- */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: "Poppins", sans-serif;
+
+            background: radial-gradient(circle at top, #0f0c29, #302b63, #24243e);
+            overflow: hidden;
+        }
+
+        /* ---------- MOVING GLOW EFFECT ---------- */
+        .glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0,255,255,0.5), transparent);
+            animation: rotateGlow 10s linear infinite;
+            filter: blur(150px);
+            z-index: -1;
+        }
+
+        @keyframes rotateGlow {
+            0%   { transform: translate(-200px, -200px) rotate(0deg); }
+            50%  { transform: translate(200px, 200px) rotate(180deg); }
+            100% { transform: translate(-200px, -200px) rotate(360deg); }
+        }
+
+        /* ---------- CALCULATOR BOX ---------- */
+        .calculator {
+            width: 340px;
+            padding: 25px;
+            border-radius: 25px;
+
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.4),
+                        inset 0 0 40px rgba(255, 255, 255, 0.05);
+
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { transform: translateY(40px); opacity: 0; }
+            to   { transform: translateY(0); opacity: 1; }
+        }
+
+        /* ---------- DISPLAY ---------- */
+        #display {
+            width: 100%;
+            height: 70px;
+
+            font-size: 35px;
+            padding: 15px;
+            text-align: right;
+            border-radius: 15px;
+
+            color: #00eaff;
+            border: none;
+            outline: none;
+
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ---------- BUTTON GRID ---------- */
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        /* ---------- COMMON BUTTON STYLE ---------- */
+        button {
+            padding: 18px;
+            font-size: 22px;
+            font-weight: 600;
+
+            border: none;
+            cursor: pointer;
+            border-radius: 14px;
+
+            color: white;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+
+            transition: 0.25s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
+        }
+
+        button:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+        }
+
+        /* ---------- OPERATOR ---------- */
+        .operator {
+            color: #ffea00;
+            background: rgba(255, 234, 0, 0.2);
+            box-shadow: 0 0 12px rgba(255, 234, 0, 0.3);
+        }
+
+        .operator:hover {
+            background: rgba(255, 234, 0, 0.35);
+            box-shadow: 0 0 18px rgba(255, 255, 0, 0.55);
+        }
+
+        /* ---------- EQUAL BUTTON ---------- */
+        .equal {
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            box-shadow: 0 0 20px rgba(255, 50, 90, 0.7);
+        }
+
+        .equal:hover {
+            background: linear-gradient(135deg, #ff0000, #c3006b);
+            box-shadow: 0 0 30px rgba(255, 0, 80, 0.9);
+        }
+
+        /* ---------- ZERO BUTTON ---------- */
+        .zero {
+            grid-column: span 2;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Glow Animation -->
+    <div class="glow"></div>
+
+    <!-- Calculator Container -->
+    <div class="calculator">
+
+        <!-- Display -->
+        <input type="text" id="display" disabled>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="deleteLast()">DEL</button>
+            <button class="operator" onclick="appendValue('%')">%</button>
+            <button class="operator" onclick="appendValue('/')">/</button>
+
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button class="operator" onclick="appendValue('*')">*</button>
+
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button class="operator" onclick="appendValue('-')">-</button>
+
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button class="operator" onclick="appendValue('+')">+</button>
+
+            <button class="zero" onclick="appendValue('0')">0</button>
+            <button onclick="appendValue('.')">.</button>
+            <button class="equal" onclick="calculate()">=</button>
+        </div>
+
+    </div>
+
+    <!-- Calculator Logic -->
+    <script>
+        let display = document.getElementById("display");
+
+        function appendValue(value) {
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            display.value = "";
+        }
+
+        function deleteLast() {
+            display.value = display.value.slice(0, -1);
+        }
+
+        function calculate() {
+            try {
+                display.value = eval(display.value);
+            } catch {
+                display.value = "Error";
+            }
+        }
+    </script>
+
+</body>
+</html>
