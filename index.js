@@ -1,10 +1,13 @@
-function digitalclock(){
-    var time=new Date()
-    var hours=time.getHours().toString().padStart(2,'0')
-    var minutes=time.getMinutes().toString().padStart(2,'0')
-    var seconds=time.getSeconds().toString().padStart(2,'0')
-    document.getElementById('clock').textContent=`${hours}:${minutes}:${seconds}`
-}
-setInterval(digitalclock,1000)
+function updateClock() {
+    const clock = document.getElementById("clock");
+    let time = new Date();
 
-digitalclock()
+    let h = String(time.getHours()).padStart(2, "0");
+    let m = String(time.getMinutes()).padStart(2, "0");
+    let s = String(time.getSeconds()).padStart(2, "0");
+
+    clock.innerHTML = `${h}:${m}:${s}`;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
